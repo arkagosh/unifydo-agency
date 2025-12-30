@@ -1,144 +1,179 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Start a Project | UNIFYDO</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Start a Project | UNIFYDO</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-    <style>
-        :root {
-            --primary: #0066FF;
-            --primary-gradient: linear-gradient(90deg, #0066FF, #00D1FF, #9D00FF);
-            --dark: #030303;
-            --glass: rgba(255, 255, 255, 0.03);
-        }
+<style>
+    :root {
+        --primary: #0066FF;
+        --primary-gradient: linear-gradient(90deg, #0066FF, #00D1FF, #9D00FF);
+        --dark: #030303;
+        --glass: rgba(255, 255, 255, 0.03);
+    }
 
-        body {
-            background-color: var(--dark);
-            color: white;
-            font-family: 'Inter', sans-serif;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow-x: hidden;
-        }
+    body {
+        background-color: var(--dark);
+        color: white;
+        font-family: 'Inter', sans-serif;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow-x: hidden;
+    }
 
-        .heading-font { font-family: 'Archivo Black', sans-serif; }
+    .heading-font { font-family: 'Archivo Black', sans-serif; }
 
-        .form-container {
-            background: var(--glass);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            width: 100%;
-            max-width: 600px;
-        }
+    .form-container {
+        background: var(--glass);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(20px);
+        width: 100%;
+        max-width: 600px;
+        position: relative;
+    }
 
-        .input-field {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
-        }
+    .input-field {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
 
-        .input-field:focus {
-            outline: none;
-            border-color: var(--primary);
-            background: rgba(255, 255, 255, 0.08);
-            box-shadow: 0 0 20px rgba(0, 102, 255, 0.2);
-        }
+    .input-field:focus {
+        outline: none;
+        border-color: var(--primary);
+        background: rgba(255, 255, 255, 0.08);
+        box-shadow: 0 0 20px rgba(0, 102, 255, 0.2);
+    }
 
-        .btn-premium {
-            background: var(--primary-gradient);
-            background-size: 200% auto;
-            transition: 0.5s;
-        }
+    .btn-premium {
+        background: var(--primary-gradient);
+        background-size: 200% auto;
+        transition: 0.5s;
+    }
 
-        .btn-premium:hover {
-            background-position: right center;
-            transform: translateY(-2px);
-        }
+    .btn-premium:hover {
+        background-position: right center;
+        transform: translateY(-2px);
+    }
 
-        .blob {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
-            z-index: -1;
-            opacity: 0.2;
-        }
-    </style>
+    .blob {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(80px);
+        z-index: -1;
+        opacity: 0.2;
+    }
+</style>
 </head>
 <body>
 
-    <div class="blob w-96 h-96 bg-blue-600 -top-20 -left-20"></div>
-    <div class="blob w-80 h-80 bg-purple-600 -bottom-20 -right-20"></div>
+<div class="blob w-96 h-96 bg-blue-600 -top-20 -left-20"></div>
+<div class="blob w-80 h-80 bg-purple-600 -bottom-20 -right-20"></div>
 
-    <div class="container mx-auto px-6 py-12">
-        <a href="index.html" class="text-sm text-gray-400 hover:text-white mb-8 inline-block transition">← Back to Home</a>
-        
-        <div class="form-container p-8 md:p-12 rounded-[40px] shadow-2xl reveal">
-            <h1 class="heading-font text-4xl md:text-5xl mb-2">Let's <span class="text-blue-500">Unify.</span></h1>
-            <p class="text-gray-400 mb-10">Tell us about your vision and we'll handle the rest.</p>
+<div class="container mx-auto px-6 py-12">
+    <a href="index.html" class="text-sm text-gray-400 hover:text-white mb-8 inline-block transition">← Back to Home</a>
+    
+    <div class="form-container p-8 md:p-12 rounded-[40px] shadow-2xl reveal">
+        <h1 class="heading-font text-4xl md:text-5xl mb-2">Let's <span class="text-blue-500">Unify.</span></h1>
+        <p class="text-gray-400 mb-10">Tell us about your vision and we'll handle the rest.</p>
 
-            <form id="contactForm" class="space-y-6">
-                <div>
-                    <label class="block text-xs font-bold uppercase tracking-widest text-gray-500 mb-2">Full Name</label>
-                    <input type="text" required placeholder="John Doe" 
-                           class="input-field w-full p-4 rounded-2xl text-white">
-                </div>
-
-                <div>
-                    <label class="block text-xs font-bold uppercase tracking-widest text-gray-500 mb-2">Email Address</label>
-                    <input type="email" required placeholder="john@example.com" 
-                           class="input-field w-full p-4 rounded-2xl text-white">
-                </div>
-
-                <div>
-                    <label class="block text-xs font-bold uppercase tracking-widest text-gray-500 mb-2">About Your Work</label>
-                    <textarea required rows="5" placeholder="Describe your project, goals, and timeline..." 
-                              class="input-field w-full p-4 rounded-2xl text-white resize-none"></textarea>
-                </div>
-
-                <button type="submit" class="btn-premium w-full py-5 rounded-2xl font-black uppercase tracking-widest text-sm shadow-lg">
-                    Send Proposal
-                </button>
-            </form>
-            
-            <div id="successMsg" class="hidden text-center mt-6 p-4 bg-green-500/10 text-green-400 rounded-2xl border border-green-500/20">
-                Project details sent successfully! We'll be in touch soon.
+        <form id="contactForm" class="space-y-6">
+            <div>
+                <label class="block text-xs font-bold uppercase tracking-widest text-gray-500 mb-2">Full Name</label>
+                <input type="text" required placeholder="John Doe"  
+                       class="input-field w-full p-4 rounded-2xl text-white">
             </div>
+
+            <div>
+                <label class="block text-xs font-bold uppercase tracking-widest text-gray-500 mb-2">Email Address</label>
+                <input type="email" required placeholder="john@example.com"  
+                       class="input-field w-full p-4 rounded-2xl text-white">
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold uppercase tracking-widest text-gray-500 mb-2">About Your Work</label>
+                <textarea required rows="5" placeholder="Describe your project, goals, and timeline..."  
+                          class="input-field w-full p-4 rounded-2xl text-white resize-none"></textarea>
+            </div>
+
+            <button type="submit" class="btn-premium w-full py-5 rounded-2xl font-black uppercase tracking-widest text-sm shadow-lg">
+                Send Proposal
+            </button>
+        </form>
+        
+        <div id="successMsg" class="hidden text-center mt-6 p-4 bg-green-500/10 text-green-400 rounded-2xl border border-green-500/20">
+            Project details sent successfully! We'll be in touch soon.
         </div>
     </div>
+</div>
 
-    <script>
-        // Reveal animation
-        gsap.from(".reveal", {
-            y: 30,
-            opacity: 0,
-            duration: 1,
-            ease: "power4.out"
-        });
+<script>
+    // Reveal animation
+    gsap.from(".reveal", {
+        y: 30,
+        opacity: 0,
+        duration: 1,
+        ease: "power4.out"
+    });
 
-        // Form Submission Handling
-        const form = document.getElementById('contactForm');
-        const successMsg = document.getElementById('successMsg');
+    // Blob floating animation
+    gsap.to(".blob", {
+        y: "-=20",
+        repeat: -1,
+        yoyo: true,
+        duration: 6,
+        ease: "sine.inOut"
+    });
 
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            // For a real website, you would use a service like Formspree or a backend here
-            // This is the visual feedback:
-            form.style.display = 'none';
-            successMsg.classList.remove('hidden');
-            
-            gsap.from(successMsg, {
-                scale: 0.9,
-                opacity: 0,
-                duration: 0.5
+    // Cool hover animation for input and textarea
+    const inputs = document.querySelectorAll(".input-field");
+
+    inputs.forEach(input => {
+        input.addEventListener("mouseenter", () => {
+            gsap.to(input, {
+                scale: 1.05,
+                rotate: 1.5,
+                boxShadow: "0 0 20px rgba(0,102,255,0.5)",
+                duration: 0.4,
+                ease: "power2.out"
             });
         });
-    </script>
+        input.addEventListener("mouseleave", () => {
+            gsap.to(input, {
+                scale: 1,
+                rotate: 0,
+                boxShadow: "0 0 0px rgba(0,0,0,0)",
+                duration: 0.4,
+                ease: "power2.out"
+            });
+        });
+    });
+
+    // Form Submission Handling
+    const form = document.getElementById('contactForm');
+    const successMsg = document.getElementById('successMsg');
+
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        form.style.display = 'none';
+        successMsg.classList.remove('hidden');
+        
+        gsap.from(successMsg, {
+            scale: 0.9,
+            opacity: 0,
+            duration: 0.5,
+            ease: "power2.out"
+        });
+    });
+</script>
 </body>
 </html>
+
