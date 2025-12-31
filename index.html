@@ -25,7 +25,6 @@
             overflow-x: hidden;
         }
 
-        /* Prevent scroll during loading */
         body.is-loading {
             overflow: hidden;
         }
@@ -36,7 +35,6 @@
             line-height: 1.1;
         }
 
-        /* Preloader Styles */
         #preloader {
             position: fixed;
             inset: 0;
@@ -105,15 +103,23 @@
             border-color: var(--primary);
         }
 
+        /* --- UPDATED PROJECT CARD STYLES --- */
         .project-card {
             position: relative;
             overflow: hidden;
             border-radius: 24px;
-            height: 400px;
-            background: #111;
+            height: 450px; /* Slightly taller for better impact */
+            background-color: #111;
+            background-size: 100%; /* Starting size for zoom effect */
+            background-position: center;
+            background-repeat: no-repeat;
             cursor: pointer;
             transform-style: preserve-3d;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: background-size 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .project-card:hover {
+            background-size: 110%; /* The zoom effect */
         }
 
         .btn-premium {
@@ -148,7 +154,7 @@
 
     <div id="canvas-container">
         <div class="blob w-96 h-96 bg-blue-600 top-[-10%] left-[-10%]"></div>
-        <div class="blob w-[500px] h-[500px] bg-purple-600 bottom-[-10%] right-[-10%]</div>
+        <div class="blob w-[500px] h-[500px] bg-purple-600 bottom-[-10%] right-[-10%]"></div>
         <div class="blob w-80 h-80 bg-cyan-600 top-[40%] left-[30%]"></div>
     </div>
 
@@ -215,20 +221,27 @@
     <section id="portfolio" class="container mx-auto px-6">
         <h2 class="heading-font text-4xl mb-16 scroll-reveal">Selected Projects</h2>
         <div class="grid md:grid-cols-2 gap-8">
-            <div onclick="window.location.href='portfolio.html'" class="project-card p-10 flex items-end scroll-reveal">
-                <div class="relative z-10">
+            
+            <div onclick="window.location.href='portfolio.html'" 
+                 class="project-card p-10 flex items-end scroll-reveal group"
+                 style="background-image: url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=2426');">
+                <div class="relative z-10 transition-transform duration-500 group-hover:translate-x-3">
                     <p class="text-blue-400 font-bold text-xs uppercase tracking-widest mb-2">Web Development</p>
                     <h3 class="text-3xl font-bold">E-Commerce Revolution</h3>
                 </div>
-                <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-80"></div>
+                <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-500"></div>
             </div>
-            <div onclick="window.location.href='portfolio.html'" class="project-card p-10 flex items-end scroll-reveal" style="background: #1a1a1a;">
-                <div class="relative z-10">
+
+            <div onclick="window.location.href='portfolio.html'" 
+                 class="project-card p-10 flex items-end scroll-reveal group" 
+                 style="background-image: url('https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&q=80&w=2070');">
+                <div class="relative z-10 transition-transform duration-500 group-hover:translate-x-3">
                     <p class="text-blue-400 font-bold text-xs uppercase tracking-widest mb-2">Branding</p>
                     <h3 class="text-3xl font-bold">Fintech Identity System</h3>
                 </div>
-                <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-80"></div>
+                <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-500"></div>
             </div>
+
         </div>
     </section>
 
@@ -262,7 +275,6 @@
             .to("#loader-progress", { width: "100%", duration: 1.2, ease: "power2.inOut" }, "-=0.5")
             .to("#loader-logo", { y: -50, opacity: 0, duration: 0.6, ease: "power4.in" })
             .to("#preloader", { yPercent: -100, duration: 1, ease: "expo.inOut" }, "-=0.2")
-            // Start hero reveal right as preloader leaves
             .from(".hero-reveal", { 
                 y: 100, 
                 opacity: 0, 
