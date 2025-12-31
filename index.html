@@ -25,10 +25,27 @@
             overflow-x: hidden;
         }
 
+        /* Prevent scroll during loading */
+        body.is-loading {
+            overflow: hidden;
+        }
+
         .heading-font {
             font-family: 'Archivo Black', sans-serif;
             letter-spacing: -0.04em;
             line-height: 1.1;
+        }
+
+        /* Preloader Styles */
+        #preloader {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: #030303;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
         }
 
         #canvas-container {
@@ -116,11 +133,22 @@
         section { padding: 120px 0; }
     </style>
 </head>
-<body>
+<body class="is-loading">
+
+    <div id="preloader">
+        <div class="overflow-hidden">
+            <div id="loader-logo" class="heading-font text-4xl md:text-6xl font-black tracking-tighter translate-y-full">
+                UNIFY<span class="text-gradient">DO</span>
+            </div>
+        </div>
+        <div class="w-48 h-[2px] bg-white/10 mt-6 relative overflow-hidden">
+            <div id="loader-progress" class="absolute inset-0 bg-blue-600 w-0"></div>
+        </div>
+    </div>
 
     <div id="canvas-container">
         <div class="blob w-96 h-96 bg-blue-600 top-[-10%] left-[-10%]"></div>
-        <div class="blob w-[500px] h-[500px] bg-purple-600 bottom-[-10%] right-[-10%]"></div>
+        <div class="blob w-[500px] h-[500px] bg-purple-600 bottom-[-10%] right-[-10%]</div>
         <div class="blob w-80 h-80 bg-cyan-600 top-[40%] left-[30%]"></div>
     </div>
 
@@ -221,14 +249,36 @@
     <script>
         gsap.registerPlugin(ScrollTrigger);
 
+        // --- PRELOADER & HERO LOGIC ---
+        const loaderTimeline = gsap.timeline({
+            onComplete: () => {
+                document.body.classList.remove('is-loading');
+                document.getElementById('preloader').style.display = 'none';
+            }
+        });
+
+        loaderTimeline
+            .to("#loader-logo", { y: 0, duration: 1, ease: "power4.out", delay: 0.3 })
+            .to("#loader-progress", { width: "100%", duration: 1.2, ease: "power2.inOut" }, "-=0.5")
+            .to("#loader-logo", { y: -50, opacity: 0, duration: 0.6, ease: "power4.in" })
+            .to("#preloader", { yPercent: -100, duration: 1, ease: "expo.inOut" }, "-=0.2")
+            // Start hero reveal right as preloader leaves
+            .from(".hero-reveal", { 
+                y: 100, 
+                opacity: 0, 
+                duration: 1.2, 
+                stagger: 0.2, 
+                ease: "power4.out" 
+            }, "-=0.4");
+
+        // --- NAVBAR SCROLL ---
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('navbar');
             if (window.scrollY > 50) nav.classList.add('scrolled');
             else nav.classList.remove('scrolled');
         });
 
-        gsap.from(".hero-reveal", { y: 100, opacity: 0, duration: 1.2, stagger: 0.2, ease: "power4.out", delay: 0.5 });
-
+        // --- SCROLL REVEALS ---
         document.querySelectorAll('.scroll-reveal').forEach((el) => {
             gsap.from(el, {
                 scrollTrigger: { trigger: el, start: "top 85%", toggleActions: "play none none reverse" },
@@ -236,6 +286,7 @@
             });
         });
 
+        // --- MOUSE & BLOB EFFECTS ---
         document.addEventListener('mousemove', (e) => {
             const { clientX, clientY } = e;
             const x = (clientX / window.innerWidth - 0.5) * 60;
@@ -256,6 +307,7 @@
             });
         });
 
+        // --- SMOOTH SCROLL ---
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -264,6 +316,7 @@
             });
         });
 
+        // --- CARD 3D EFFECTS ---
         function cardHoverEffect(selector) {
             const cards = document.querySelectorAll(selector);
             cards.forEach(card => {
