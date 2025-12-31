@@ -77,6 +77,32 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
+        /* --- NEW MENU ANIMATION STYLES --- */
+        .nav-link {
+            position: relative;
+            padding: 0.5rem 0;
+            display: inline-block;
+            transition: color 0.3s ease;
+        }
+
+        #nav-indicator {
+            position: absolute;
+            height: 2px;
+            background: var(--primary-gradient);
+            bottom: -2px;
+            left: 0;
+            border-radius: 10px;
+            pointer-events: none;
+            opacity: 0;
+            box-shadow: 0 0 15px var(--primary);
+        }
+
+        .char {
+            display: inline-block;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        /* -------------------------------- */
+
         .text-gradient {
             background: var(--primary-gradient);
             -webkit-background-clip: text;
@@ -160,12 +186,15 @@
     <nav id="navbar" class="px-6 py-6 md:px-12">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
             <div class="text-2xl font-black tracking-tighter">UNIFY<span class="text-gradient">DO</span></div>
-            <ul class="hidden md:flex gap-10 text-sm font-medium opacity-80">
-                <li><a href="index.html" class="hover:text-blue-400 transition">Home</a></li>
-                <li><a href="about.html" class="hover:text-blue-400 transition font-bold text-white">About</a></li>
-                <li><a href="#services" class="hover:text-blue-400 transition">Services</a></li>
-                <li><a href="portfolio.html" class="hover:text-blue-400 transition">Portfolio</a></li>
+            
+            <ul class="hidden md:flex gap-10 text-sm font-bold opacity-90 relative items-center" id="main-menu">
+                <div id="nav-indicator"></div>
+                <li><a href="index.html" class="nav-link">HOME</a></li>
+                <li><a href="about.html" class="nav-link text-white">ABOUT</a></li>
+                <li><a href="#services" class="nav-link">SERVICES</a></li>
+                <li><a href="portfolio.html" class="nav-link">PORTFOLIO</a></li>
             </ul>
+
             <a href="contact.html" class="btn-premium px-6 py-2 rounded-full text-xs font-bold uppercase tracking-widest">Hire Us</a>
         </div>
     </nav>
@@ -259,6 +288,7 @@
     <script>
         gsap.registerPlugin(ScrollTrigger);
 
+        // --- PRELOADER ---
         const loaderTimeline = gsap.timeline({
             onComplete: () => {
                 document.body.classList.remove('is-loading');
@@ -279,12 +309,62 @@
                 ease: "power4.out" 
             }, "-=0.4");
 
+        // --- NEW MENU ANIMATION LOGIC ---
+        const menu = document.querySelector('#main-menu');
+        const links = document.querySelectorAll('.nav-link');
+        const indicator = document.querySelector('#nav-indicator');
+
+        links.forEach(link => {
+            // Split text into spans for staggered pop
+            const text = link.textContent;
+            link.innerHTML = text.split('').map(char => `<span class="char">${char}</span>`).join('');
+
+            link.addEventListener('mouseenter', (e) => {
+                const rect = e.target.getBoundingClientRect();
+                const menuRect = menu.getBoundingClientRect();
+                
+                // Move Underline
+                gsap.to(indicator, {
+                    opacity: 1,
+                    left: rect.left - menuRect.left,
+                    width: rect.width,
+                    duration: 0.4,
+                    ease: "power3.out"
+                });
+
+                // Animate Letters
+                gsap.to(link.querySelectorAll('.char'), {
+                    y: -5,
+                    stagger: 0.05,
+                    duration: 0.3,
+                    ease: "back.out(3)",
+                    color: "#00D1FF"
+                });
+            });
+
+            link.addEventListener('mouseleave', () => {
+                gsap.to(link.querySelectorAll('.char'), {
+                    y: 0,
+                    stagger: 0.05,
+                    duration: 0.3,
+                    ease: "power2.in",
+                    color: "white"
+                });
+            });
+        });
+
+        menu.addEventListener('mouseleave', () => {
+            gsap.to(indicator, { opacity: 0, duration: 0.4 });
+        });
+
+        // --- SCROLL NAVBAR ---
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('navbar');
             if (window.scrollY > 50) nav.classList.add('scrolled');
             else nav.classList.remove('scrolled');
         });
 
+        // --- SCROLL REVEAL ---
         document.querySelectorAll('.scroll-reveal').forEach((el) => {
             gsap.from(el, {
                 scrollTrigger: { trigger: el, start: "top 85%", toggleActions: "play none none reverse" },
@@ -292,6 +372,7 @@
             });
         });
 
+        // --- MOUSE MOVE BLOBS ---
         document.addEventListener('mousemove', (e) => {
             const { clientX, clientY } = e;
             const x = (clientX / window.innerWidth - 0.5) * 60;
@@ -299,6 +380,7 @@
             gsap.to(".blob", { x: x, y: y, duration: 2, ease: "power2.out", stagger: 0.1 });
         });
 
+        // --- MAGNETIC BUTTONS ---
         const magneticBtns = document.querySelectorAll('.btn-premium, .magnetic');
         magneticBtns.forEach(btn => {
             btn.addEventListener('mousemove', (e) => {
@@ -312,6 +394,7 @@
             });
         });
 
+        // --- CARD HOVER 3D ---
         function cardHoverEffect(selector) {
             const cards = document.querySelectorAll(selector);
             cards.forEach(card => {
