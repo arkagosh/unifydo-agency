@@ -77,7 +77,6 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* --- NEW MENU ANIMATION STYLES --- */
         .nav-link {
             position: relative;
             padding: 0.5rem 0;
@@ -101,7 +100,6 @@
             display: inline-block;
             transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        /* -------------------------------- */
 
         .text-gradient {
             background: var(--primary-gradient);
@@ -146,6 +144,35 @@
         .project-card:hover {
             background-size: 110%;
         }
+
+        /* --- LOGO SECTION STYLES --- */
+        .logo-card {
+            background: var(--glass);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.5s ease;
+            transform-style: preserve-3d;
+        }
+
+        .logo-img {
+            max-height: 35px;
+            width: 80%;
+            object-fit: contain;
+            filter: grayscale(1) brightness(2);
+            opacity: 0.5;
+            transition: all 0.4s ease;
+        }
+
+        .logo-card:hover .logo-img {
+            filter: grayscale(0) brightness(1);
+            opacity: 1;
+            transform: scale(1.1) translateZ(20px);
+        }
+        /* --------------------------- */
 
         .btn-premium {
             background: var(--primary-gradient);
@@ -208,6 +235,23 @@
             <div class="hero-reveal">
                 <a href="portfolio.html" class="btn-premium px-10 py-5 rounded-2xl font-black uppercase tracking-[0.2em] text-sm">View Our Work</a>
             </div>
+        </div>
+    </section>
+
+    <section id="clients" class="container mx-auto px-6 text-center">
+        <h2 class="heading-font text-3xl md:text-5xl mb-16 scroll-reveal">Trusted by Global <br><span class="text-gradient">Tech Leaders</span></h2>
+        
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 max-w-6xl mx-auto mb-16">
+            <div class="logo-card scroll-reveal"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" class="logo-img" alt="Amazon"></div>
+            <div class="logo-card scroll-reveal"><img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" class="logo-img" alt="Google"></div>
+            <div class="logo-card scroll-reveal"><img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" class="logo-img" alt="Microsoft"></div>
+            <div class="logo-card scroll-reveal"><img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" class="logo-img" style="filter: invert(1); opacity: 0.5;" alt="Apple"></div>
+            <div class="logo-card scroll-reveal"><img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" class="logo-img" alt="Netflix"></div>
+            <div class="logo-card scroll-reveal"><img src="https://upload.wikimedia.org/wikipedia/commons/2/21/Nvidia_logo.svg" class="logo-img" alt="Nvidia"></div>
+        </div>
+
+        <div class="scroll-reveal">
+            <a href="contact.html" class="btn-premium px-8 py-4 rounded-xl text-xs font-black uppercase tracking-widest magnetic">Partner With Us</a>
         </div>
     </section>
 
@@ -321,7 +365,6 @@
         const indicator = document.querySelector('#nav-indicator');
 
         links.forEach(link => {
-            // Split text into spans for staggered pop
             const text = link.textContent;
             link.innerHTML = text.split('').map(char => `<span class="char">${char}</span>`).join('');
 
@@ -329,7 +372,6 @@
                 const rect = e.target.getBoundingClientRect();
                 const menuRect = menu.getBoundingClientRect();
                 
-                // Move Underline
                 gsap.to(indicator, {
                     opacity: 1,
                     left: rect.left - menuRect.left,
@@ -338,7 +380,6 @@
                     ease: "power3.out"
                 });
 
-                // Animate Letters
                 gsap.to(link.querySelectorAll('.char'), {
                     y: -5,
                     stagger: 0.05,
@@ -417,7 +458,7 @@
         }
         cardHoverEffect('.card');
         cardHoverEffect('.project-card');
+        cardHoverEffect('.logo-card'); // Added 3D effect to logos
     </script>
 </body>
 </html>
-
