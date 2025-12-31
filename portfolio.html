@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | UNIFYDO Masterpieces</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #0066FF;
+            --primary-gradient: linear-gradient(90deg, #0066FF, #00D1FF, #9D00FF);
+            --dark: #030303;
+            --glass: rgba(255, 255, 255, 0.03);
+        }
+
+        body {
+            background-color: var(--dark);
+            color: white;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .heading-font { font-family: 'Archivo Black', sans-serif; }
+
+        /* Background Animated Blobs */
+        #canvas-container {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; filter: blur(80px); opacity: 0.3;
+        }
+        .blob { position: absolute; border-radius: 50%; filter: blur(40px); }
+
+        .text-gradient {
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            animation: shine 4s linear infinite;
+        }
+        @keyframes shine { to { background-position: 200% center; } }
+
+        /* Magnetic Button Effect */
+        .filter-btn {
+            padding: 12px 28px;
+            border-radius: 99px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: var(--glass);
+            cursor: pointer;
+            color: white;
+            display: inline-block;
+        }
+
+        .filter-btn.active {
+            background: var(--primary-gradient);
+            border-color: transparent;
+            box-shadow: 0 0 20px rgba(0, 102, 255, 0.4);
+        }
+
+        /* Portfolio Cards */
+        .portfolio-card {
+            background: var(--glass);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            overflow: hidden;
+        }
+
+        .img-container {
+            width: 100%; height: 260px;
+            overflow: hidden; position: relative;
+        }
+        .img-container img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 0.8s cubic-bezier(0.2, 1, 0.3, 1);
+        }
+        .portfolio-card:hover .img-container img { transform: scale(1.1); }
+
+        .project-item.hidden { display: none; }
+    </style>
+</head>
+<body>
+
+    <nav class="fixed top-0 left-0 p-6 md:p-10 z-[1001]">
+        <a href="index.html" class="group flex items-center gap-4 text-white/50 hover:text-white transition-all duration-300">
+            <div class="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center bg-white/5 group-hover:border-blue-500 group-hover:bg-blue-500/10 transition-all magnetic">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            </div>
+            <span class="text-xs font-bold uppercase tracking-[0.2em] opacity-0 -translate-x-3 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
+                Back Home
+            </span>
+        </a>
+    </nav>
+
+    <div id="canvas-container">
+        <div class="blob w-96 h-96 bg-blue-600 top-[-10%] left-[-10%]"></div>
+        <div class="blob w-[500px] h-[500px] bg-purple-600 bottom-[-10%] right-[-10%]"></div>
+        <div class="blob w-80 h-80 bg-cyan-600 top-[40%] left-[30%]"></div>
+    </div>
+
+    <section class="pt-32 pb-20 container mx-auto px-6">
+        <div class="text-center mb-16">
+            <h1 class="heading-font text-5xl md:text-8xl mb-6 hero-reveal">Portfolio <span class="text-gradient">Vault.</span></h1>
+            <p class="text-gray-400 text-lg max-w-2xl mx-auto hero-reveal">A collection of digital excellence and creative engineering.</p>
+        </div>
+
+        <div class="flex flex-wrap justify-center gap-6 mb-20 hero-reveal">
+            <button class="filter-btn active magnetic" onclick="filterWork('all', this)">All Projects</button>
+            <button class="filter-btn magnetic" onclick="filterWork('web', this)">Web Dev</button>
+            <button class="filter-btn magnetic" onclick="filterWork('app', this)">App Dev</button>
+            <button class="filter-btn magnetic" onclick="filterWork('brand', this)">Identity</button>
+            <button class="filter-btn magnetic" onclick="filterWork('marketing', this)">Marketing</button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="project-item web portfolio-card scroll-reveal">
+                <div class="img-container"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800" alt="Web"></div>
+                <div class="p-6">
+                    <span class="text-blue-400 text-[10px] font-bold uppercase tracking-widest">Web Development</span>
+                    <h3 class="text-xl font-bold mt-2">Titan E-com Architecture</h3>
+                    <p class="text-gray-400 text-xs mt-2">Next-gen headless Shopify build for premium fashion.</p>
+                </div>
+            </div>
+
+            <div class="project-item app portfolio-card scroll-reveal">
+                <div class="img-container"><img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?auto=format&fit=crop&q=80&w=800" alt="App"></div>
+                <div class="p-6">
+                    <span class="text-cyan-400 text-[10px] font-bold uppercase tracking-widest">App Development</span>
+                    <h3 class="text-xl font-bold mt-2">Zenith Fintech Wallet</h3>
+                    <p class="text-gray-400 text-xs mt-2">Secure crypto-banking app with biometric encryption.</p>
+                </div>
+            </div>
+
+            <div class="project-item brand portfolio-card scroll-reveal">
+                <div class="img-container"><img src="https://images.unsplash.com/photo-1558655146-d09347e92766?auto=format&fit=crop&q=80&w=800" alt="Brand"></div>
+                <div class="p-6">
+                    <span class="text-purple-400 text-[10px] font-bold uppercase tracking-widest">Brand Identity</span>
+                    <h3 class="text-xl font-bold mt-2">Onyx Coffee Identity</h3>
+                    <p class="text-gray-400 text-xs mt-2">Minimalist visual storytelling for a luxury roastery.</p>
+                </div>
+            </div>
+
+            <div class="project-item marketing portfolio-card scroll-reveal">
+                <div class="img-container"><img src="https://images.unsplash.com/photo-1533750516457-a7f992034fce?auto=format&fit=crop&q=80&w=800" alt="Marketing"></div>
+                <div class="p-6">
+                    <span class="text-blue-400 text-[10px] font-bold uppercase tracking-widest">Marketing</span>
+                    <h3 class="text-xl font-bold mt-2">SaaS Scaler 2.0</h3>
+                    <p class="text-gray-400 text-xs mt-2">Full-funnel lead generation reaching 1M+ users.</p>
+                </div>
+            </div>
+
+            <div class="project-item web portfolio-card scroll-reveal">
+                <div class="img-container"><img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=800" alt="Web"></div>
+                <div class="p-6">
+                    <span class="text-blue-400 text-[10px] font-bold uppercase tracking-widest">Web Development</span>
+                    <h3 class="text-xl font-bold mt-2">Architectural Web Experience</h3>
+                    <p class="text-gray-400 text-xs mt-2">Immersive WebGL showcase for NY designers.</p>
+                </div>
+            </div>
+
+            <div class="project-item app portfolio-card scroll-reveal">
+                <div class="img-container"><img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&q=80&w=800" alt="App"></div>
+                <div class="p-6">
+                    <span class="text-cyan-400 text-[10px] font-bold uppercase tracking-widest">App Development</span>
+                    <h3 class="text-xl font-bold mt-2">FitFlow Smart Coach</h3>
+                    <p class="text-gray-400 text-xs mt-2">AI-driven training app with posture detection.</p>
+                </div>
+            </div>
+
+            <div class="project-item brand portfolio-card scroll-reveal">
+                <div class="img-container"><img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&q=80&w=800" alt="Brand"></div>
+                <div class="p-6">
+                    <span class="text-purple-400 text-[10px] font-bold uppercase tracking-widest">Brand Identity</span>
+                    <h3 class="text-xl font-bold mt-2">Veloce EV Brand</h3>
+                    <p class="text-gray-400 text-xs mt-2">Sleek identity for an electric supercar brand.</p>
+                </div>
+            </div>
+
+            <div class="project-item marketing portfolio-card scroll-reveal">
+                <div class="img-container"><img src="https://images.unsplash.com/photo-1557838923-2985c318be48?auto=format&fit=crop&q=80&w=800" alt="Marketing"></div>
+                <div class="p-6">
+                    <span class="text-blue-400 text-[10px] font-bold uppercase tracking-widest">Marketing</span>
+                    <h3 class="text-xl font-bold mt-2">Viral Buzz Social</h3>
+                    <p class="text-gray-400 text-xs mt-2">High-conversion content for a global Gen-Z brand.</p>
+                </div>
+            </div>
+
+            <div class="project-item web portfolio-card scroll-reveal">
+                <div class="img-container"><img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80&w=800" alt="Web"></div>
+                <div class="p-6">
+                    <span class="text-blue-400 text-[10px] font-bold uppercase tracking-widest">Web Development</span>
+                    <h3 class="text-xl font-bold mt-2">Global Learning Portal</h3>
+                    <p class="text-gray-400 text-xs mt-2">Enterprise LMS for Fortune 500 employee training.</p>
+                </div>
+            </div>
+
+            <div class="project-item app portfolio-card scroll-reveal">
+                <div class="img-container"><img src="https://images.unsplash.com/photo-1555774698-0b77e0d5fac6?auto=format&fit=crop&q=80&w=800" alt="App"></div>
+                <div class="p-6">
+                    <span class="text-cyan-400 text-[10px] font-bold uppercase tracking-widest">App Development</span>
+                    <h3 class="text-xl font-bold mt-2">IoT Home Hub</h3>
+                    <p class="text-gray-400 text-xs mt-2">Real-time automation for smart residential systems.</p>
+                </div>
+            </div>
+
+            <div class="project-item brand portfolio-card scroll-reveal">
+                <div class="img-container"><img src="https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&q=80&w=800" alt="Brand"></div>
+                <div class="p-6">
+                    <span class="text-purple-400 text-[10px] font-bold uppercase tracking-widest">Brand Identity</span>
+                    <h3 class="text-xl font-bold mt-2">Prism Tech Logo</h3>
+                    <p class="text-gray-400 text-xs mt-2">A generative logo system for a data firm.</p>
+                </div>
+            </div>
+
+            <div class="project-item marketing portfolio-card scroll-reveal">
+                <div class="img-container"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800" alt="Marketing"></div>
+                <div class="p-6">
+                    <span class="text-blue-400 text-[10px] font-bold uppercase tracking-widest">Marketing</span>
+                    <h3 class="text-xl font-bold mt-2">SEO Dominance Case</h3>
+                    <p class="text-gray-400 text-xs mt-2">Ranking at #1 for competitive tech keywords.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Hero Reveal
+        gsap.from(".hero-reveal", { y: 50, opacity: 0, duration: 1, stagger: 0.2, ease: "power4.out" });
+
+        // Scroll Reveal for Cards
+        document.querySelectorAll('.scroll-reveal').forEach((el) => {
+            gsap.from(el, {
+                scrollTrigger: { trigger: el, start: "top 90%" },
+                y: 40, opacity: 0, duration: 0.8, ease: "power2.out"
+            });
+        });
+
+        // Background Blobs follow mouse
+        document.addEventListener('mousemove', (e) => {
+            const { clientX, clientY } = e;
+            const x = (clientX / window.innerWidth - 0.5) * 60;
+            const y = (clientY / window.innerHeight - 0.5) * 60;
+            gsap.to(".blob", { x: x, y: y, duration: 2, ease: "power2.out", stagger: 0.1 });
+        });
+
+        // MAGNETIC BUTTON ANIMATION (Applied to Filter Buttons AND Back Button)
+        const magneticBtns = document.querySelectorAll('.magnetic');
+        magneticBtns.forEach(btn => {
+            btn.addEventListener('mousemove', (e) => {
+                const rect = btn.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                gsap.to(btn, { 
+                    x: x * 0.4, 
+                    y: y * 0.4, 
+                    scale: 1.15, 
+                    duration: 0.3, 
+                    ease: "power2.out" 
+                });
+            });
+
+            btn.addEventListener('mouseleave', () => {
+                gsap.to(btn, { x: 0, y: 0, scale: 1, duration: 0.6, ease: "elastic.out(1, 0.3)" });
+            });
+        });
+
+        // Filter Logic
+        function filterWork(category, btn) {
+            const items = document.querySelectorAll('.project-item');
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            items.forEach(item => {
+                if (category === 'all' || item.classList.contains(category)) {
+                    item.style.display = 'block';
+                    gsap.fromTo(item, {scale: 0.9, opacity: 0}, {scale: 1, opacity: 1, duration: 0.4});
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
